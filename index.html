@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital3 — Strategy. Creativity. Technology.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #FAFAFA;
+            --off-white: #F3F1EE;
+            --light-grey: #E8E5E0;
+            --mid-grey: #B0ACA6;
+            --text: #1A1A1A;
+            --text-secondary: #4A4A4A;
+            --text-tertiary: #7A7A7A;
+            --accent: #1A1A1A;
+            --accent-light: #2D2D2D;
+            --teal: #0D7C6E;
+            --teal-light: #E8F5F2;
+            --warm-bg: #F8F6F3;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --display: 'Sora', -apple-system, sans-serif;
+            --sans: 'DM Sans', -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--sans);
+            color: var(--text);
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ---- UTILITY ---- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 80px);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- NAV ---- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(250, 250, 250, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        nav.scrolled {
+            border-bottom-color: var(--light-grey);
+        }
+        nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .nav-logo svg {
+            width: 36px;
+            height: 36px;
+        }
+        .nav-logo span {
+            font-family: var(--display);
+            font-weight: 500;
+            font-size: 1.25rem;
+            letter-spacing: -0.03em;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 24px;
+            background: var(--accent);
+            color: var(--white) !important;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .nav-cta:hover { background: var(--accent-light); }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .mobile-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 72px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(13, 124, 110, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--off-white);
+            border-radius: 100px;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.04em;
+            font-weight: 500;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+        }
+        .hero-label .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--teal);
+            border-radius: 50%;
+        }
+        .hero h1 {
+            font-family: var(--display);
+            font-size: clamp(2.75rem, 6vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 28px;
+        }
+        .hero h1 em {
+            font-family: var(--serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--teal);
+            letter-spacing: 0.01em;
+        }
+        .hero p {
+            font-size: clamp(1.0625rem, 1.8vw, 1.1875rem);
+            line-height: 1.65;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin-bottom: 40px;
+        }
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            border-radius: 100px;
+            font-family: var(--sans);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+        .btn-primary svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.25s;
+        }
+        .btn-primary:hover svg { transform: translateX(3px); }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--light-grey);
+            border-radius: 100px;
+            font-family: var(--sans);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .btn-secondary:hover {
+            border-color: var(--mid-grey);
+            background: var(--off-white);
+        }
+
+        /* ---- PILLARS ---- */
+        .pillars {
+            padding: 120px 0 60px;
+        }
+        .pillars-header {
+            text-align: center;
+            margin-bottom: 72px;
+        }
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 16px;
+        }
+        .pillars-header h2 {
+            font-family: var(--display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: var(--light-grey);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .pillar-card {
+            background: var(--white);
+            padding: 48px 40px;
+            transition: background 0.3s ease;
+        }
+        .pillar-card:hover { background: var(--warm-bg); }
+        .pillar-num {
+            font-family: var(--serif);
+            font-size: 0.875rem;
+            color: var(--teal);
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pillar-num::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--light-grey);
+        }
+        .pillar-card h3 {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        .pillar-card p {
+            font-size: 0.9375rem;
+            line-height: 1.65;
+            color: var(--text-secondary);
+        }
+
+        /* ---- AI SECTION ---- */
+        .ai-section {
+            padding: 100px 0 120px;
+            background: var(--accent);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        .ai-section::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(13, 124, 110, 0.15) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .ai-section .section-label { color: var(--teal); opacity: 0.9; }
+        .ai-inner { position: relative; z-index: 1; }
+        .ai-content { max-width: 720px; margin-bottom: 56px; }
+        .ai-content h2 {
+            font-family: var(--display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+        .ai-lead {
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            color: rgba(250, 250, 250, 0.8);
+            margin-bottom: 16px;
+        }
+        .ai-body {
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            color: rgba(250, 250, 250, 0.65);
+        }
+        .ai-capabilities {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+        .ai-cap {
+            padding: 28px 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .ai-cap:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(13, 124, 110, 0.3);
+        }
+        .ai-cap-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(13, 124, 110, 0.15);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            color: var(--teal);
+        }
+        .ai-cap h4 {
+            font-family: var(--sans);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+        .ai-cap p {
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            color: rgba(250, 250, 250, 0.55);
+        }
+
+        /* ---- SERVICES ---- */
+        .services {
+            padding: 60px 0 120px;
+        }
+        .services-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 56px;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .services-header h2 {
+            font-family: var(--display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        .services-header p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            max-width: 400px;
+            line-height: 1.6;
+        }
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid var(--light-grey);
+        }
+        .service-row {
+            display: grid;
+            grid-template-columns: 240px 1fr auto;
+            align-items: center;
+            gap: 40px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--light-grey);
+            transition: padding-left 0.3s ease;
+            cursor: default;
+        }
+        .service-row:hover { padding-left: 12px; }
+        .service-name {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+        .service-desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+        .service-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .tag {
+            padding: 4px 14px;
+            background: var(--off-white);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* ---- NEXTUP FEATURE ---- */
+        .nextup {
+            padding: 120px 0;
+            background: var(--warm-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        .nextup::before {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(13, 124, 110, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .nextup-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .nextup-content { position: relative; z-index: 1; }
+        .nextup-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--teal-light);
+            border-radius: 100px;
+            font-size: 0.8125rem;
+            color: var(--teal);
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .nextup-content h2 {
+            font-family: var(--display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .nextup-content > p {
+            font-size: 1.0625rem;
+            line-height: 1.65;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        .nextup-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+        .nextup-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .nextup-feature .check {
+            width: 22px;
+            height: 22px;
+            background: var(--teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .nextup-feature .check svg {
+            width: 12px;
+            height: 12px;
+            color: white;
+        }
+        .nextup-feature p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .nextup-feature p strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* NextUp visual mockup */
+        .nextup-visual {
+            position: relative;
+            z-index: 1;
+        }
+        .phone-mockup {
+            width: 280px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 36px;
+            padding: 16px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.04);
+            border: 1px solid var(--light-grey);
+        }
+        .phone-screen {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        .phone-status {
+            display: flex;
+            justify-content: center;
+            padding: 8px 20px 4px;
+        }
+        .phone-notch {
+            width: 100px;
+            height: 28px;
+            background: var(--text);
+            border-radius: 20px;
+        }
+        .phone-content {
+            padding: 20px 20px 28px;
+        }
+        .phone-greeting {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+        .phone-title {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        .phone-task {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--off-white);
+        }
+        .phone-task:last-child { border-bottom: none; }
+        .task-check {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--light-grey);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .task-check.done {
+            border-color: var(--teal);
+            background: var(--teal);
+            position: relative;
+        }
+        .task-check.done::after {
+            content: '✓';
+            color: white;
+            font-size: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .task-text {
+            font-size: 0.8125rem;
+            line-height: 1.4;
+            color: var(--text);
+        }
+        .task-text.completed {
+            text-decoration: line-through;
+            color: var(--mid-grey);
+        }
+        .task-meta {
+            font-size: 0.6875rem;
+            color: var(--teal);
+            margin-top: 2px;
+        }
+        .phone-rec {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background: var(--teal-light);
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+        .rec-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .rec-icon svg { width: 14px; height: 14px; color: white; }
+        .rec-text {
+            font-size: 0.75rem;
+            color: var(--teal);
+            font-weight: 500;
+        }
+
+        /* ---- CONTACT ---- */
+        .contact {
+            padding: 120px 0;
+        }
+        .contact-inner {
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .contact-inner h2 {
+            font-family: var(--display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .contact-inner > p {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 40px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: left;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px 16px;
+            border: 1px solid var(--light-grey);
+            border-radius: 10px;
+            font-family: var(--sans);
+            font-size: 0.9375rem;
+            color: var(--text);
+            background: var(--white);
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--teal);
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-submit {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+        }
+        .form-submit .btn-primary { border: none; }
+
+        /* ---- FOOTER ---- */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--light-grey);
+        }
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-left svg { width: 24px; height: 24px; }
+        .footer-left span {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+        .footer-right {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+        .footer-right a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .footer-right a:hover { color: var(--text); }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 900px) {
+            .ai-capabilities { grid-template-columns: repeat(2, 1fr); }
+            .pillars-grid { grid-template-columns: 1fr; }
+            .service-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .service-tags { justify-content: flex-start; }
+            .nextup-inner {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+            .nextup-visual { order: -1; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .ai-capabilities { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: rgba(250,250,250,0.98);
+                backdrop-filter: blur(20px);
+                padding: 24px;
+                gap: 20px;
+                border-bottom: 1px solid var(--light-grey);
+            }
+            .services-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+    <div class="container">
+        <a href="#" class="nav-logo">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="10" fill="#1A1A1A"/>
+                <text x="7" y="29" font-family="Georgia, serif" font-size="22" font-weight="500" fill="#FAFAFA">d</text>
+                <text x="21" y="29" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#0D7C6E">3</text>
+            </svg>
+            <span>Digital3</span>
+        </a>
+        <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="#pillars">Our Approach</a></li>
+            <li><a href="#ai">AI</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#nextup">NextUp</a></li>
+            <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content fade-in">
+            <h1>Strategy. Creativity.<br><em>Technology.</em></h1>
+            <p>Digital3 delivers outcome-driven technology solutions across AI, application development, and enterprise consulting. We don't chase trends — we solve real problems with the right approach, the right thinking, and the right tools.</p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn-primary">
+                    Start a conversation
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="#services" class="btn-secondary">Explore our services</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars" id="pillars">
+    <div class="container">
+        <div class="pillars-header fade-in">
+            <span class="section-label">Our Approach</span>
+            <h2>Three pillars that drive<br>every engagement</h2>
+        </div>
+        <div class="pillars-grid fade-in">
+            <div class="pillar-card">
+                <div class="pillar-num">01</div>
+                <h3>Strategy</h3>
+                <p>Every solution starts with a clear understanding of the problem. We work closely with our clients to define outcomes, map dependencies, and build a path that delivers measurable value — not just deliverables.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-num">02</div>
+                <h3>Creativity</h3>
+                <p>Technology alone doesn't differentiate. We bring design thinking and creative problem-solving to every project, crafting experiences and solutions that are as thoughtful as they are functional.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-num">03</div>
+                <h3>Technology</h3>
+                <p>AI, cloud, mobile, enterprise — we select and apply the right technology for the job. Our technical depth spans multiple disciplines, enabling us to architect solutions that are modern, scalable, and built to last.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI FOCUS -->
+<section class="ai-section" id="ai">
+    <div class="container">
+        <div class="ai-inner fade-in">
+            <div class="ai-content">
+                <span class="section-label">Artificial Intelligence</span>
+                <h2>AI that delivers outcomes,<br>not just outputs</h2>
+                <p class="ai-lead">The conversation around AI has shifted from possibility to practicality. Organisations are no longer asking whether to adopt AI — they're asking how to deploy it responsibly, integrate it into existing workflows, and measure its impact on real business outcomes.</p>
+                <p class="ai-body">At Digital3, we take a pragmatic approach to AI. We help organisations identify where intelligent automation, language models, and machine learning create genuine value — reducing manual effort, surfacing insights, and enabling teams to focus on higher-order work. We design solutions that sit within your existing technology landscape, not alongside it.</p>
+            </div>
+            <div class="ai-capabilities">
+                <div class="ai-cap">
+                    <div class="ai-cap-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h4>LLM Strategy & Integration</h4>
+                    <p>Selecting the right models, designing effective prompts, and embedding language AI into products and processes — with clear governance and cost controls.</p>
+                </div>
+                <div class="ai-cap">
+                    <div class="ai-cap-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18M3 9h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <h4>Intelligent Agents & Workflows</h4>
+                    <p>Custom AI agents that reason, act, and integrate across systems — from document processing and data extraction to multi-step decision support.</p>
+                </div>
+                <div class="ai-cap">
+                    <div class="ai-cap-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 18a6 6 0 100-12 6 6 0 000 12z" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <h4>Voice & Speech AI</h4>
+                    <p>Real-time transcription, speaker diarisation, and voice-driven interfaces that turn conversations into structured, actionable data.</p>
+                </div>
+                <div class="ai-cap">
+                    <div class="ai-cap-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 3h18v18H3V3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 9h18M9 3v18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 14l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h4>AI Readiness & Advisory</h4>
+                    <p>Helping leadership teams cut through the noise — assessing where AI fits, what's realistic today, and how to build a roadmap that scales with maturity.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+    <div class="container">
+        <div class="services-header fade-in">
+            <div>
+                <span class="section-label">Services</span>
+                <h2>What we deliver</h2>
+            </div>
+            <p>Practical expertise across the technology landscape, from intelligent automation to enterprise platforms.</p>
+        </div>
+        <div class="services-list fade-in">
+            <div class="service-row">
+                <div class="service-name">AI & Automation</div>
+                <div class="service-desc">Custom AI agents, large language model integration, voice-to-action workflows, and intelligent automation designed to augment your team — not replace it.</div>
+                <div class="service-tags">
+                    <span class="tag">LLM Integration</span>
+                    <span class="tag">Agents</span>
+                    <span class="tag">Automation</span>
+                </div>
+            </div>
+            <div class="service-row">
+                <div class="service-name">iOS & App Development</div>
+                <div class="service-desc">Native iOS and macOS applications built with Swift and SwiftUI. From concept through App Store, we create polished products that users want to come back to.</div>
+                <div class="service-tags">
+                    <span class="tag">Swift</span>
+                    <span class="tag">SwiftUI</span>
+                    <span class="tag">App Store</span>
+                </div>
+            </div>
+            <div class="service-row">
+                <div class="service-name">Web Development</div>
+                <div class="service-desc">Modern web applications, marketing sites, and SaaS platforms. Responsive, performant, and designed with purpose — from landing pages to full-stack solutions.</div>
+                <div class="service-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">SaaS</span>
+                    <span class="tag">Full-Stack</span>
+                </div>
+            </div>
+            <div class="service-row">
+                <div class="service-name">Salesforce Consulting</div>
+                <div class="service-desc">End-to-end Salesforce implementation, customisation, and integration. Specialising in health, government, and aged care with deep experience across industry clouds and Data Cloud.</div>
+                <div class="service-tags">
+                    <span class="tag">Implementation</span>
+                    <span class="tag">MuleSoft</span>
+                    <span class="tag">Data Cloud</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEXTUP FEATURE -->
+<section class="nextup" id="nextup">
+    <div class="container">
+        <div class="nextup-inner">
+            <div class="nextup-content fade-in">
+                <div class="nextup-badge">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    Flagship Product
+                </div>
+                <h2>NextUp</h2>
+                <p>An AI-powered productivity app for iOS and Mac that transforms how professionals manage their work. NextUp listens to your meetings, extracts what matters, and organises it into actionable workflows — so nothing falls through the cracks.</p>
+                <div class="nextup-features">
+                    <div class="nextup-feature">
+                        <div class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <p><strong>Meeting transcription</strong> with speaker identification and AI-powered action extraction</p>
+                    </div>
+                    <div class="nextup-feature">
+                        <div class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <p><strong>GTD-based task management</strong> that structures your work into clear next actions and projects</p>
+                    </div>
+                    <div class="nextup-feature">
+                        <div class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <p><strong>Smart planning wizards</strong> that help you triage, prioritise, and plan your day with AI guidance</p>
+                    </div>
+                </div>
+                <a href="#contact" class="btn-primary">
+                    Learn more about NextUp
+                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+            <div class="nextup-visual fade-in">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="phone-status">
+                            <div class="phone-notch"></div>
+                        </div>
+                        <div class="phone-content">
+                            <div class="phone-greeting">Good morning</div>
+                            <div class="phone-title">Today's Focus</div>
+                            <div class="phone-task">
+                                <div class="task-check done"></div>
+                                <div>
+                                    <div class="task-text completed">Review Q4 budget proposal</div>
+                                    <div class="task-meta">Completed</div>
+                                </div>
+                            </div>
+                            <div class="phone-task">
+                                <div class="task-check"></div>
+                                <div>
+                                    <div class="task-text">Prepare partner demo deck</div>
+                                    <div class="task-meta">From: Strategy call · 2 actions</div>
+                                </div>
+                            </div>
+                            <div class="phone-task">
+                                <div class="task-check"></div>
+                                <div>
+                                    <div class="task-text">Follow up with design team on v2</div>
+                                    <div class="task-meta">From: Product sync · Due today</div>
+                                </div>
+                            </div>
+                            <div class="phone-rec">
+                                <div class="rec-icon">
+                                    <svg viewBox="0 0 16 16" fill="none"><path d="M8 2a3 3 0 00-3 3v3a3 3 0 006 0V5a3 3 0 00-3-3z" stroke="currentColor" stroke-width="1.5"/><path d="M4 8a4 4 0 008 0M8 12v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                </div>
+                                <div class="rec-text">Recording in progress…<br>Product roadmap review</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="contact-inner fade-in">
+            <span class="section-label">Get in Touch</span>
+            <h2>Let's discuss what's <em style="font-family: var(--serif); font-style: italic; font-weight: 300;">possible</em></h2>
+            <p>Whether you're exploring AI, building a product, or optimising your Salesforce investment — we'd welcome the conversation.</p>
+            <form class="contact-form" onsubmit="handleSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="you@company.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="interest">Area of Interest</label>
+                    <select id="interest">
+                        <option value="">Select a service area</option>
+                        <option value="ai">AI & Automation</option>
+                        <option value="ios">iOS & App Development</option>
+                        <option value="web">Web Development</option>
+                        <option value="salesforce">Salesforce Consulting</option>
+                        <option value="nextup">NextUp</option>
+                        <option value="other">Other / General Enquiry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Tell us about your project or challenge…" required></textarea>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="btn-primary">
+                        Send message
+                        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="10" fill="#1A1A1A"/>
+                    <text x="7" y="29" font-family="Georgia, serif" font-size="22" font-weight="500" fill="#FAFAFA">d</text>
+                    <text x="21" y="29" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#0D7C6E">3</text>
+                </svg>
+                <span>&copy; 2026 Digital3 Pty Ltd. All rights reserved.</span>
+            </div>
+            <div class="footer-right">
+                <a href="mailto:hello@digital3.com.au">hello@digital3.com.au</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Form handler (placeholder)
+    function handleSubmit(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.textContent = 'Message sent ✓';
+        btn.style.background = '#0D7C6E';
+        setTimeout(() => {
+            btn.innerHTML = 'Send message <svg viewBox="0 0 16 16" fill="none" width="16" height="16"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            btn.style.background = '';
+            e.target.reset();
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
