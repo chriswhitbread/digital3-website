@@ -789,6 +789,10 @@
             font-size: 0.8125rem;
             color: var(--text-tertiary);
         }
+        .build-version {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum";
+        }
         .footer-right {
             font-size: 0.8125rem;
             color: var(--text-tertiary);
@@ -1131,7 +1135,7 @@
                     <text x="7" y="29" font-family="Georgia, serif" font-size="22" font-weight="500" fill="#FAFAFA">d</text>
                     <text x="21" y="29" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#0D7C6E">3</text>
                 </svg>
-                <span>&copy; 2026 Digital3 Pty Ltd. All rights reserved.</span>
+                <span>&copy; 2026 Digital3 Pty Ltd &middot; <span class="build-version">{{VERSION}}</span></span>
             </div>
             <div class="footer-right">
                 <a href="mailto:hello@digital3.com.au">hello@digital3.com.au</a>
