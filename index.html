@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital3 — Strategy. Creativity. Technology.</title>
+    <title>Digital3 — AI, iOS, web, and Salesforce for regulated industries</title>
+    <meta name="description" content="Digital3 builds AI, iOS, web, and Salesforce solutions for organisations in health, government, and aged care — backed by NextUp, our flagship AI productivity app.">
+    <meta name="theme-color" content="#1A1A1A">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231A1A1A'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-weight='400' text-anchor='middle' fill='%23FAFAFA'%3Ed%3C/text%3E%3Ctext x='44' y='44' font-family='Georgia,serif' font-style='italic' font-size='28' text-anchor='middle' fill='%230D7C6E'%3E3%3C/text%3E%3C/svg%3E">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://digital3.com.au/">
+    <meta property="og:title" content="Digital3 — AI, iOS, web, and Salesforce for regulated industries">
+    <meta property="og:description" content="AI consulting from a team that ships its own AI product. We build for health, government, and aged care.">
+    <meta property="og:site_name" content="Digital3">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Digital3 — AI, iOS, web, and Salesforce for regulated industries">
+    <meta name="twitter:description" content="AI consulting from a team that ships its own AI product. We build for health, government, and aged care.">
+    <link rel="canonical" href="https://digital3.com.au/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -57,6 +69,14 @@
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .fade-in, .fade-in.visible {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
         }
 
         /* ---- NAV ---- */
@@ -822,7 +842,7 @@
 <!-- NAV -->
 <nav id="nav">
     <div class="container">
-        <a href="#" class="nav-logo">
+        <a href="/" class="nav-logo" aria-label="Digital3 home">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="40" height="40" rx="10" fill="#1A1A1A"/>
                 <text x="7" y="29" font-family="Georgia, serif" font-size="22" font-weight="500" fill="#FAFAFA">d</text>
@@ -848,7 +868,7 @@
     <div class="container">
         <div class="hero-content fade-in">
             <h1>Strategy. Creativity.<br><em>Technology.</em></h1>
-            <p>Digital3 delivers outcome-driven technology solutions across AI, application development, and enterprise consulting. We don't chase trends — we solve real problems with the right approach, the right thinking, and the right tools.</p>
+            <p>AI, iOS, web, and Salesforce — built for organisations in health, government, and aged care. Digital3 is an Australian technology partner that ships its own AI product, <a href="https://nextupai.app" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;">NextUp</a>, so the AI work we do for you is grounded in shipping experience, not slides.</p>
             <div class="hero-actions">
                 <a href="#contact" class="btn-primary">
                     Start a conversation
@@ -895,7 +915,7 @@
                 <span class="section-label">Artificial Intelligence</span>
                 <h2>AI that delivers outcomes,<br>not just outputs</h2>
                 <p class="ai-lead">The conversation around AI has shifted from possibility to practicality. Organisations are no longer asking whether to adopt AI — they're asking how to deploy it responsibly, integrate it into existing workflows, and measure its impact on real business outcomes.</p>
-                <p class="ai-body">At Digital3, we take a pragmatic approach to AI. We help organisations identify where intelligent automation, language models, and machine learning create genuine value — reducing manual effort, surfacing insights, and enabling teams to focus on higher-order work. We design solutions that sit within your existing technology landscape, not alongside it.</p>
+                <p class="ai-body">We help teams identify where language models, intelligent agents, and machine learning create real value — and design solutions that sit inside your existing systems, not alongside them. Pragmatic scoping, clear governance, measurable outcomes.</p>
             </div>
             <div class="ai-capabilities">
                 <div class="ai-cap">
@@ -1007,7 +1027,7 @@
                         <p><strong>Smart planning wizards</strong> that help you triage, prioritise, and plan your day with AI guidance</p>
                     </div>
                 </div>
-                <a href="#contact" class="btn-primary">
+                <a href="https://nextupai.app" class="btn-primary" target="_blank" rel="noopener">
                     Learn more about NextUp
                     <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
@@ -1137,6 +1157,11 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Reveal hero immediately — no scroll required, prevents "blank above the fold" flash
+    requestAnimationFrame(() => {
+        document.querySelector('.hero-content')?.classList.add('visible');
+    });
 
     // Form handler (placeholder)
     function handleSubmit(e) {
